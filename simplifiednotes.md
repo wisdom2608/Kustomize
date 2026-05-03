@@ -109,6 +109,22 @@ kubectl apply -f nginx-deployment.yml
 kubectl apply -f nginx-service.yml
 ````
 
+OR
+````bash
+kubectl apply -f K8s/manifests/nginx-namespace.yml
+kubectl apply -f K8s/manifests/nginx-configmap.yml
+kubectl apply -f K8s/manifests/nginx-deployment.yml
+kubectl apply -f K8s/manifests/nginx-service.yml
+```
+
+*We can apply the entire folder* 
+
+Sometimes this is good enough to say let us just apply the entire folder and that folder becomes our package, or chart, etc.
+
+```bash
+kubectl apply -f K8s/manifests
+```
+
 We can bundle everything (yml objects) into a single K8s configuration management tool called `kustomize.yml`
 
 The folder structure will look like this.
@@ -142,7 +158,15 @@ Run it
 From the K8s directory:
 
 ```bash
-kubectl apply -k manifests/
+kubectl apply -k K8s/manifests/
+```
+
+**Cleanup**
+
+To remove everything 
+
+```bash
+kubectl delete -k K8s/manifests/
 ```
 
 
