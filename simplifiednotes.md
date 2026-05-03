@@ -128,7 +128,7 @@ For some people, this is good enough because you don't need any kind of complica
 kubectl apply -f K8s/manifests
 ```
 
-We can bundle everything (yml objects) into a single K8s configuration management tool called `kustomize.yml`
+We can bundle everything (yml objects) into a single K8s configuration management tool called `kustomizeation.yml`
 
 The folder structure will look like this.
 
@@ -141,11 +141,11 @@ K8s/
     ├── nginx-service.yml
     └── kustomization.yml
 ```
-Create a `kustomize.yml` file to bundle  the `namespace`, `configmap`, `deployment`, and `service` .*yml* objects
+Create a `kustomization.yml` file to bundle  the `namespace`, `configmap`, `deployment`, and `service` .*yml* objects
 
-`kustomize.yml`
+`kustomization.yml`
 ```yml
-#kustomize.yml
+#kustomization.yml
 
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
