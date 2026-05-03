@@ -257,10 +257,10 @@ commonLabels:
 ```
 We removed the namespace so that each overlay has its own namespace specification.
 
+We need to create a namespace in each overlay. For resources to be created in the dev environment, for example, we have to create a `dev-namespace.yml` for Dev environment and then add it to the  kustomization.yml file resources and so on.
+
 - *DEV Overlay*
   (`/K8s/overlays/dev/kustomization.yml`)
-
-We need to create a namespace in each overlay. For resources to be created in the dev environment, For example, we have to create a `dev-namespace.yml` for Dev environment and then add it to the  kustomization.yml file resources and so on.
 
  - create dev-namespace
 `dev-namespace.yml`
