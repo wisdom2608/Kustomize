@@ -2,6 +2,14 @@ To interact with Kubernetes, we use YML files. There are multiple ways of dealin
 
 Kubernetes allows to describe our infrastructures, and our applications as YML files.
 
+```bash
+K8s/
+└── manifests/
+    ├── nginx-namespace.yml
+    ├── nginx-configmap.yml
+    ├── nginx-deployment.yml
+    └── nginx-service.yml
+```
 Let’s take a look at the traditional way of applying YML objects to a kubernetes and then we are going to take a look at what kustomize does to help us improve the process. 
 
 In the basic way, we normally use the popular `kubectl get apply -f` to deal with YML files. For example, let’s consider the following kubernetes YML files.
