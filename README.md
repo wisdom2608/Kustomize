@@ -156,7 +156,8 @@ K8s/
 We can keep our previous  `nginx-namespace.yml`, `nginx-configmap.yml`, `nginx-deployment.yml`, and `nginx-service.yml` intact, and unchanged and just apply the necessary changes that we need to our *dev*, *staging*, and *prod* environment.
 
 To start we kustomize, we need a `kustomization.yml` that describes what we want our bundle to look like. So we in the *kustomization.yml* file, we introduce resources and list all the resources we want in our bundle.
-So, we’ll include all the yml files- `nginx-namespace.yml`, `nginx-configmap.yml`, `nginx-deployment.yml`, and `nginx-service.yml` that we have in the K8s/manifests folder.
+So, we’ll include all the yml files
+`nginx-namespace.yml`, `nginx-configmap.yml`, `nginx-deployment.yml`, and `nginx-service.yml` that we have in the K8s/manifests folder.
 
 `kustomization.yml`
 
@@ -259,7 +260,8 @@ We removed the namespace so that each overlay has its own namespace specificatio
 - *DEV Overlay*
   (`/K8s/overlays/dev/kustomization.yml`)
 
-For these resources to created in the dev environment, we need to create a namespace in each overlay. For example, let's create create a `dev-namespace.yml` Dev environment and then add it to the  kustomization.yml file resources and so on.
+We need to create a namespace in each overlay. For resources to be created in the dev environment, For example, we have to create a `dev-namespace.yml` for Dev environment and then add it to the  kustomization.yml file resources and so on.
+
  - create dev-namespace
 `dev-namespace.yml`
 
