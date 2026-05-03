@@ -10,7 +10,7 @@ K8s/
 ```
 File contents
 
-K8s/manifests/nginx-namespace.yml
+a). K8s/manifests/nginx-namespace.yml
 
 ```yml
 apiVersion: v1
@@ -18,7 +18,7 @@ kind: Namespace
 metadata:
   name: nginx
 ```
-K8s/manifests/nginx-configmap.yml
+b). K8s/manifests/nginx-configmap.yml
 
 ```yml
 apiVersion: v1
@@ -35,7 +35,8 @@ data:
       </body>
     </html>
 ```
-K8s/manifests/nginx-deployment.yml
+
+c). K8s/manifests/nginx-deployment.yml
 
 ```yml
 apiVersion: apps/v1
@@ -68,7 +69,7 @@ spec:
         configMap:
           name: nginx-config
 ```
-K8s/manifests/nginx-service.yml
+d). K8s/manifests/nginx-service.yml
 
 ```yml
 apiVersion: v1
@@ -86,7 +87,11 @@ spec:
     nodePort: 30080
     protocol: TCP
 ```
-we can run these files individualy to apply the yml objects
+
+The ConfigMap mounts a simple `index. html` into nginx so you have something to test when you hit `http: // <NODE-IP>: 30080`.
+
+
+We can run these files individualy and apply the yml objects
 to kunernetes as shown below:
 
 ````bash
@@ -109,7 +114,7 @@ K8s/
     ├── nginx-service.yml
     └── kustomization.yml
 ```
-Create a `kustomize.yml` file to bundle  the `namespace`, `configmap`, `deployment`, and `services` .YML objects
+Create a `kustomize.yml` file to bundle  the `namespace`, `configmap`, `deployment`, and `service` .*yml* objects
 
 `kustomize.yml`
 ```yml
@@ -123,9 +128,14 @@ resources:
 ```
 
 Run it
+
 From the K8s directory:
 
 ```bash
 kubectl apply -k manifests/
 ```
+
+
+
+
 
