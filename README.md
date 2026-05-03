@@ -257,7 +257,7 @@ commonLabels:
     └── prod/
         ├── kustomization.yml
 ```
-We remove the namespace so that each overlay has its own namespace specification.
+We have to remove the `nginx-namespace.yml` so that each overlay has its own namespace specification.
 
 We need to create a namespace in each overlay. For resources to be created in the dev environment, for example, we have to create a `dev-namespace.yml` for Dev environment and then add it to the  kustomization.yml file resources and so on.
 
