@@ -110,14 +110,14 @@ kubectl apply -f nginx-service.yml
 ````
 
 OR
-````bash
+
+```bash
 kubectl apply -f K8s/manifests/nginx-namespace.yml
 kubectl apply -f K8s/manifests/nginx-configmap.yml
 kubectl apply -f K8s/manifests/nginx-deployment.yml
 kubectl apply -f K8s/manifests/nginx-service.yml
 ```
-
-*We can apply the entire folder* 
+*We can apply the entire folder*
 
 Sometimes this is good enough to say let us just apply the entire folder and that folder becomes our package, or chart, etc.
 
