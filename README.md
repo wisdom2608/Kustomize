@@ -333,7 +333,7 @@ replicas:
 ```
 
 
-PROD Overlay*
+*PROD Overlay*
 
 (`/K8s/overlays/prod/kustomization.yml`)
 
@@ -368,9 +368,21 @@ replicas:
   - name: nginx-deployment
     count: 3
 ```
+*Deploy Each Environment*
+ - DEV
+```bash
+kubectl apply -k overlays/dev/
+```
 
+ - STAGING
+```bash
+kubectl apply -k overlays/staging/
 ```
+ - PROD
+```bash
+kubectl apply -k overlays/prod/
 ```
+
 ```
 ```
 ```
