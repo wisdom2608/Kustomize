@@ -385,7 +385,7 @@ kubectl apply -k overlays/staging/
 ```bash
 kubectl apply -k overlays/prod/
 ```
-*PATCHING*
+**PATCHING**
 
 Patching is exactly how we make overlays truly environment-specific.
 
@@ -443,7 +443,7 @@ metadata:
    
 `configmap-patch.yml`
 
-```bash
+```yml
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -464,7 +464,7 @@ data:
 
    `replicas-patch.yml`
    
-```bash
+```yml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -474,7 +474,7 @@ spec:
 ```
   - Add the `configmap-patch.yml`, and `replica-patch.yml` files to DEV `kustomization.yml`
     
-```bash
+```yml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
@@ -509,7 +509,7 @@ metadata:
    
 `configmap-patch.yml`
 
-```bash
+```yml
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -529,7 +529,7 @@ data:
 
    `replicas-patch.yml`
    
-```bash
+```yml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -539,7 +539,7 @@ spec:
 ```
   - Add the `configmap-patch.yml`, and `replica-patch.yml` files to STAGING`kustomization.yml`
     
-```bash
+```yml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
@@ -575,7 +575,7 @@ metadata:
    
 `configmap-patch.yml`
 
-```bash
+```yml
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -595,7 +595,7 @@ data:
 
    `replicas-patch.yml`
    
-```bash
+```yml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -605,7 +605,7 @@ spec:
 ```
   - Add the `configmap-patch.yml`, and `replica-patch.yml` files to STAGING`kustomization.yml`
     
-```bash
+```yml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
