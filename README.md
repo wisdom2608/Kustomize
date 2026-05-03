@@ -120,6 +120,15 @@ kubectl apply -f nginx-deployment.yml
 kubectl apply -f nginx-service.yml
 ```
 
+We can apply the entire folder
+
+Sometimes this is good enough to say let us just apply the entire folder and that folder becomes our package, or chart, etc.
+
+For some people, this is good enough because you don't need any kind of complicate templating, and parameter injection, you can just take a whole folder and deploy your infrastructure.
+
+```bash
+kubectl apply -f K8s/manifests
+```
 
 
 ```
