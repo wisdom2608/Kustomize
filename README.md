@@ -213,13 +213,33 @@ When we apply our custom files, we say, we want to use development, it will be a
     ├── deployment.yml
     └── service.yml
 ```
-*Directory structure after introducing  overlays*
+
+- *Base Kustomization*(`/K8s/base/kustomization.yml`)
+
+This is a common configuration shared across all environments(dev, staging, prod):
+
+
+```yml
+#kustomazition.yml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - nginx-namespace.yml
+  - nginx-configmap.yml
+  - nginx-deployment.yml
+  - nginx-service.yml
+
+commonLabels:
+  app: nginx
+```
+
+*Directory structure after introducing  overlays(Environments)*
 
 ```bash
 /K8s/
 ├── base/
 │   ├── kustomization.yml
-│   ├── namespace.yml
 │   ├── configmap.yml
 │   ├── deployment.yml
 │   └── service.yml
@@ -234,9 +254,121 @@ When we apply our custom files, we say, we want to use development, it will be a
     └── prod/
         ├── kustomization.yml
 ```
+We removed the namespace so that each overlay has its own namespace specification.
+
+- *DEV Overlay*
+  (`/K8s/overlays/dev/kustomization.yml`)
+
+For these resources to created in the dev environment, we need to create a namespace in each overlay. For example, let's create create a `dev-namespace.yml` Dev environment and then add it to the  kustomization.yml file resources and so on.
+ - create dev-namespace
+`dev-namespace.yml`
+
+```yml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-nginx
+```
+Add the dev-namespace.yml file to kustomization.yml file for dev env.
+
+```yml
+#kustomazition.yml
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+  - dev-namespace.yml
+
+namePrefix: dev-
+
+commonLabels:
+  environment: dev
+
+replicas:
+  - name: nginx-deployment
+    count: 1
+```
+*STAGING Overlay*
+(`/K8s/overlays/staging/kustomization.yml`)
+
+ - *create staging-namespace*
+`dev-namespace.yml`
+
+```yml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: staging-nginx
+```
+Add the staging-namespace.yml file to kustomization.yml file for staging env.
+
+```yml
+#kustomazition.yml
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+  - staging-namespace.yml
+
+namePrefix: staging-
+
+commonLabels:
+  environment: staging
+
+replicas:
+  - name: nginx-deployment
+    count: 2
+```
 
 
+PROD Overlay*
+(`/K8s/overlays/prod/kustomization.yml`)
 
+ - *create prod-namespace*
+`dev-namespace.yml`
+
+```yml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: prod-nginx
+```
+Add the prod-namespace.yml file to kustomization.yml file for staging env.
+
+```yml
+#kustomazition.yml
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+  - prod-namespace.yml
+
+namePrefix: prod-
+
+commonLabels:
+  environment: prod
+
+replicas:
+  - name: nginx-deployment
+    count: 3
+```
+
+```
+```
+```
+```
+```
+```
+```
+```
+```
+```
 ```
 ```
 
