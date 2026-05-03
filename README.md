@@ -339,7 +339,7 @@ PROD Overlay*
 
  - *create prod-namespace*
    
-`dev-namespace.yml`
+`prod-namespace.yml`
 
 ```yml
 apiVersion: v1
