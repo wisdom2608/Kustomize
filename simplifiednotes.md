@@ -13,6 +13,8 @@ File contents
 a). K8s/manifests/nginx-namespace.yml
 
 ```yml
+#nginx-namespace.yml
+
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -21,6 +23,8 @@ metadata:
 b). K8s/manifests/nginx-configmap.yml
 
 ```yml
+#nginx-configmap.yml
+
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -39,6 +43,8 @@ data:
 c). K8s/manifests/nginx-deployment.yml
 
 ```yml
+#nginx-deployment.yml
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -72,6 +78,8 @@ spec:
 d). K8s/manifests/nginx-service.yml
 
 ```yml
+#nginx-service.yml
+
 apiVersion: v1
 kind: Service
 metadata:
@@ -118,6 +126,8 @@ Create a `kustomize.yml` file to bundle  the `namespace`, `configmap`, `deployme
 
 `kustomize.yml`
 ```yml
+#kustomize.yml
+
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
