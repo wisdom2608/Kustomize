@@ -1,6 +1,6 @@
 Folder structure
 
-```code
+```bash
 K8s/
 └── manifests/
     ├── nginx-namespace.yml
@@ -95,3 +95,37 @@ kubectl apply -f nginx-configmap.yml
 kubectl apply -f nginx-deployment.yml
 kubectl apply -f nginx-service.yml
 ````
+
+We can bundle everything (yml objects) into a single K8s configuration management tool called `kustomize.yml`
+
+The folder structure will look like this.
+
+```bash
+K8s/
+└── manifests/
+    ├── nginx-namespace.yml
+    ├── nginx-configmap.yml
+    ├── nginx-deployment.yml
+    ├── nginx-service.yml
+    └── kustomization.yml
+```
+Create a `kustomize.yml` file to bundle  the `namespace`, `configmap`, `deployment`, and `services` .YML objects
+
+`kustomize.yml`
+```yml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+    - nginx-namespace.yml
+    - nginx-configmap.yml
+    - nginx-deployment.yml
+    - nginx-service.yml
+```
+
+Run it
+From the K8s directory:
+
+```bash
+kubectl apply -k manifests/
+```
+
