@@ -160,7 +160,7 @@ So, we’ll include all the yml files- `nginx-namespace.yml`, `nginx-configmap.y
 
 `kustomization.yml`
 
-```bash
+```yml
 #kustomization.yml
 
 apiVersion: kustomize.config.k8s.io/v1beta1
