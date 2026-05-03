@@ -129,7 +129,60 @@ For some people, this is good enough because you don't need any kind of complica
 ```bash
 kubectl apply -f K8s/manifests
 ```
+We we. Want to deploy things like Jenkins, ArgoCD, etc, you can basically use yaml folder by saying 
+`kubectl apply -f`. This is because it’s easy to digest, easy to read, and easy to follow and understand.  
 
+With kubernetes, you don’t need complex abstractions, complex template rendering, complicated nested templates. All of these complexities may make it much harder for people to read, digest, follow and understand. It also makes it harder to upgrade and maintain your systems.
+
+We recommend you stick to the very basic if possible. If you need something more complicated, use something like `kustomize`. Also try to keep your folders and yml files structure flat and simple.
+
+**Kubernetes native configuration management**
+
+Kustomize introduces a *template-free* way to customize application configutation that simplifies the use of off-the-shelf applications. Now, built into `kubectl` as `apply -k`
+We can take out our `deployment.yml` file that and we can keep it untouched. What we we can do is that we can introduce patches such as patches for dev, patches for stage and patches for prod. And then apply that with the tool called *kustomize* and deploy them to our kubernetes environment.
+
+Let add `kustomize.yml` to have the subsequent new folder structure.
+
+```bash
+K8s/
+└── manifests/
+    ├── nginx-namespace.yml
+    ├── nginx-configmap.yml
+    ├── nginx-deployment.yml
+    ├── nginx-service.yml
+    └── kustomization.yml
+```
+
+We can keep our previous  `nginx-namespace.yml`, `nginx-configmap.yml`, `nginx-deployment.yml`, and `nginx-service.yml` intact, and unchanged and just apply the necessary changes that we need to our *dev*, *staging*, and *prod* environment.
+
+To start we kustomize, we need a `kustomization.yml` that describes what we want our bundle to look like. So we in the *kustomization.yml* file, we introduce resources and list all the resources we want in our bundle.
+So, we’ll include all the yml files- `nginx-namespace.yml`, `nginx-configmap.yml`, `nginx-deployment.yml`, and `nginx-service.yml` that we have in the K8s/manifests folder.
+
+`kustomization.yml`
+
+```bash
+#kustomization.yml
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+    - nginx-namespace.yml
+    - nginx-configmap.yml
+    - nginx-deployment.yml
+    - nginx-service.yml
+```
+With the latest version of kubernetes, a Kustomize binary have been included to kubectl, which makes it really easy to use. 
+
+We can easily apply our yml objects to kubernetes environment using kustomize.
+
+```bash
+kubectl Kustomize ./K8s/manifests/ | kubectl apply -f 
+```
+Or
+
+```bash
+kubectl apply -k ./K8s/manifests/
+```
 
 ```
 ```
