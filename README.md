@@ -165,11 +165,21 @@ So, we’ll include all the yml files- `nginx-namespace.yml`, `nginx-configmap.y
 
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+
+# Namespace applied to all resources
+namespace: nginx
+
+# Resources to include
 resources:
-    - nginx-namespace.yml
-    - nginx-configmap.yml
-    - nginx-deployment.yml
-    - nginx-service.yml
+  - nginx-namespace.yml
+  - nginx-configmap.yml
+  - nginx-deployment.yml
+  - nginx-service.yml
+
+# Optional: common labels for all resources
+commonLabels:
+  app: nginx
+  environment: dev
 ```
 With the latest version of kubernetes, a Kustomize binary have been included to kubectl, which makes it really easy to use. 
 
