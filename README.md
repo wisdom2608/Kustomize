@@ -482,7 +482,6 @@ resources:
   - ../../base
   - dev-namespace.yml
 
-namespace: nginx-dev
 namePrefix: dev-
 
 commonLabels:
@@ -547,7 +546,6 @@ resources:
   - ../../base
   - staging-namespace.yml
 
-namespace: nginx-staging
 namePrefix: staging-
 
 commonLabels:
@@ -568,7 +566,7 @@ patchesStrategicMerge:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: staging-nginx
+  name: prod-nginx
 ```
 
  - configmap-patch
@@ -603,7 +601,7 @@ metadata:
 spec:
   replicas: 3
 ```
-  - Add the `configmap-patch.yml`, and `replica-patch.yml` files to STAGING`kustomization.yml`
+  - Add the `configmap-patch.yml`, and `replica-patch.yml` files to PROD `kustomization.yml`
     
 ```yml
 apiVersion: kustomize.config.k8s.io/v1beta1
@@ -613,7 +611,6 @@ resources:
   - ../../base
   - prod-namespace.yml
 
-namespace: nginx-staging
 namePrefix: prod-
 
 commonLabels:
