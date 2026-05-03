@@ -202,7 +202,7 @@ For Overlays, folder resources that we have, become our *base*. Then we introduc
 
 When we apply our custom files, we say, we want to use development, it will be applied to the development environment. If it’s a production overlay, we will patch in the production patches. To do this, our directory structure becomes as shown below.
 
-*Directory structure before introducing of overlays*
+*Directory structure before introducing overlays*
 
 ```bash
 /K8s/
@@ -213,7 +213,7 @@ When we apply our custom files, we say, we want to use development, it will be a
     ├── deployment.yml
     └── service.yml
 ```
-*Directory structure after introducing of overlays*
+*Directory structure after introducing  overlays*
 
 ```bash
 /K8s/
