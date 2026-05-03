@@ -250,14 +250,17 @@ commonLabels:
 └── overlays/
     ├── dev/
     │   ├── kustomization.yml
+        └── dev-namespace.yml
     │
     ├── staging/
     │   ├── kustomization.yml
+        └── staging-namespace.yml 
     │
     └── prod/
         ├── kustomization.yml
+        └── prod-namespace.yml
 ```
-We have to remove the `nginx-namespace.yml` so that each overlay has its own namespace specification.
+We have to remove the `nginx-namespace.yml`from the base directory so that each overlay has its own namespace specification.
 
 We need to create a namespace in each overlay. For resources to be created in the dev environment, for example, we have to create a `dev-namespace.yml` for Dev environment and then add it to the  kustomization.yml file resources and so on.
 
@@ -382,20 +385,249 @@ kubectl apply -k overlays/staging/
 ```bash
 kubectl apply -k overlays/prod/
 ```
+*PATCHING*
 
+Patching is exactly how we make overlays truly environment-specific.
+
+Our Updated Structure
+
+```bash
+/K8s/
+├── base/
+│   ├── kustomization.yml
+│   ├── configmap.yml
+│   ├── deployment.yml
+│   └── service.yml
+│
+└── overlays/
+    ├── dev/
+    │   ├── kustomization.yml
+    │   ├── dev-namespace.yml
+    │   ├── configmap-patch.yml
+    │   └── replicas-patch.yml
+    │
+    ├── staging/
+    │   ├── kustomization.yml
+    │   ├── staging-namespace.yml
+    │   ├── configmap-patch.yml
+    │   └── replicas-patch.yml
+    │
+    └── prod/
+        ├── kustomization.yml
+        ├── prod-namespace.yml
+        ├── configmap-patch.yml
+        └── replicas-patch.yml
 ```
-```
-```
-```
-```
-```
-```
-```
-```
+*Base stays unchanged* (important)
+
+Your base `configmap.yml` and `deployment.yml` remain generic defaults.
+
+We can override resources in some of the .yml file in the base directory by introducing patching in each environment. 
+
+ - *DEV Overlay*
+ 
+Let's create different configmap and replica count for *dev* env. and append them to ots kustomization.yml file.
+
+ - dev-namespace
+
+`dev-namespace.yml`
+
+```yml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-nginx
 ```
 
-```
+ - configmap-patch
+   
+`configmap-patch.yml`
+
+```bash
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+data:
+  default.conf: |
+    server {
+        listen 80;
+
+        location / {
+            return 200 'DEV Environment - NGINX';
+            add_header Content-Type text/plain;
+        }
+    }
 ```
 
+ - Replica-patch
+
+   `replicas-patch.yml`
+   
+```bash
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 1
 ```
+  - Add the `configmap-patch.yml`, and `replica-patch.yml` files to DEV `kustomization.yml`
+    
+```bash
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+  - dev-namespace.yml
+
+namespace: nginx-dev
+namePrefix: dev-
+
+commonLabels:
+  environment: dev
+
+patchesStrategicMerge:
+  - configmap-patch.yml
+  - replicas-patch.yml
+```
+*STAGING Overlay*
+
+ - staging-namespace
+
+`staging-namespace.yml`
+
+```yml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: staging-nginx
+```
+
+ - configmap-patch
+   
+`configmap-patch.yml`
+
+```bash
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+data:
+  default.conf: |
+    server {
+        listen 80;
+
+        location / {
+            return 200 'STAGING Environment - NGINX';
+            add_header Content-Type text/plain;
+        }
+    }
+```
+ - Replica-patch
+
+   `replicas-patch.yml`
+   
+```bash
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 2
+```
+  - Add the `configmap-patch.yml`, and `replica-patch.yml` files to STAGING`kustomization.yml`
+    
+```bash
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+  - staging-namespace.yml
+
+namespace: nginx-staging
+namePrefix: staging-
+
+commonLabels:
+  environment: staging
+
+patchesStrategicMerge:
+  - configmap-patch.yml
+  - replicas-patch.yml
+```
+
+*PROD Overlay*
+
+ - prod-namespace
+
+`prod-namespace.yml`
+
+```yml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: staging-nginx
+```
+
+ - configmap-patch
+   
+`configmap-patch.yml`
+
+```bash
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+data:
+  default.conf: |
+    server {
+        listen 80;
+
+        location / {
+            return 200 'PROD Environment - NGINX';
+            add_header Content-Type text/plain;
+        }
+    }
+```
+ - Replica-patch
+
+   `replicas-patch.yml`
+   
+```bash
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 3
+```
+  - Add the `configmap-patch.yml`, and `replica-patch.yml` files to STAGING`kustomization.yml`
+    
+```bash
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+  - prod-namespace.yml
+
+namespace: nginx-staging
+namePrefix: prod-
+
+commonLabels:
+  environment: prod
+
+patchesStrategicMerge:
+  - configmap-patch.yml
+  - replicas-patch.yml
+```
+
+*Deploy To Each Environment*
+
+```bash
+kubectl apply -k overlays/dev/
+kubectl apply -k overlays/staging/
+kubectl apply -k overlays/prod/
 ```
