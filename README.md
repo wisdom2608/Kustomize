@@ -262,9 +262,11 @@ We removed the namespace so that each overlay has its own namespace specificatio
 We need to create a namespace in each overlay. For resources to be created in the dev environment, for example, we have to create a `dev-namespace.yml` for Dev environment and then add it to the  kustomization.yml file resources and so on.
 
 - *DEV Overlay*
+  
   (`/K8s/overlays/dev/kustomization.yml`)
 
  - create dev-namespace
+   
 `dev-namespace.yml`
 
 ```yml
@@ -295,9 +297,11 @@ replicas:
     count: 1
 ```
 *STAGING Overlay*
+
 (`/K8s/overlays/staging/kustomization.yml`)
 
  - *create staging-namespace*
+   
 `dev-namespace.yml`
 
 ```yml
@@ -330,9 +334,11 @@ replicas:
 
 
 PROD Overlay*
+
 (`/K8s/overlays/prod/kustomization.yml`)
 
  - *create prod-namespace*
+   
 `dev-namespace.yml`
 
 ```yml
