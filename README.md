@@ -194,6 +194,49 @@ Or
 kubectl apply -k ./K8s/manifests/
 ```
 
+**OVERLAYS**
+
+Now we want to do something a little bit more complicated. Let’s say we want to run four (4) pods in the *dev* environment, and six (6) pods in the *prod* environment without changing the initial `deployment.yml` configuration file, for that we use a thing called overlays.
+
+For Overlays, folder resources that we have, become our *base*. Then we introduce overlays for *dev*, overlays for *staging* and overlays for *prod* environments.
+
+When we apply our custom files, we say, we want to use development, it will be applied to the development environment. If it’s a production overlay, we will patch in the production patches. To do this, our directory structure becomes as shown below.
+
+*Directory structure before introducing of overlays*
+
+```bash
+/K8s/
+└── manifests/
+    ├── kustomization.yml
+    ├── namespace.yml
+    ├── configmap.yml
+    ├── deployment.yml
+    └── service.yml
+```
+*Directory structure after introducing of overlays*
+
+```bash
+/K8s/
+├── base/
+│   ├── kustomization.yml
+│   ├── namespace.yml
+│   ├── configmap.yml
+│   ├── deployment.yml
+│   └── service.yml
+│
+└── overlays/
+    ├── dev/
+    │   ├── kustomization.yml
+    │
+    ├── staging/
+    │   ├── kustomization.yml
+    │
+    └── prod/
+        ├── kustomization.yml
+```
+
+
+
 ```
 ```
 
