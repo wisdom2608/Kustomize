@@ -155,7 +155,7 @@ We recommend you stick to the very basics if possible. If you don't need somethi
 Kustomize introduces a *template-free* way to customize application configuration that simplifies the use of off-the-shelf applications. Now, built into `kubectl` as `apply -k`
 We can take out our `deployment.yml` file and we can keep it untouched. We can introduce patches such as patches for dev, patches for stage and patches for prod. And then apply that with the tool called *kustomize* and deploy them to our kubernetes environment.
 
-Let add `kustomize.yml` to our initial folder to have the subsequent new folder structure.
+Let's add `kustomize.yml` to our initial folder to have the subsequent new folder structure.
 
 ```bash
 K8s/
