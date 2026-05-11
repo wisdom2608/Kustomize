@@ -172,6 +172,8 @@ We can keep our previous  `nginx-namespace.yml`, `nginx-configmap.yml`, `nginx-d
 To start with kustomize, we need a `kustomization.yml` that describes what we want our bundle to look like. In the *kustomization.yml* file, we introduce resources and list all the resources we want in our bundle. We will include all the yml files
 `nginx-namespace.yml`, `nginx-configmap.yml`, `nginx-deployment.yml`, and `nginx-service.yml` that we have in the K8s/manifests folder as kustomization.yml resources.
 
+NB: The namespace in which these resources have to be applied must exisr in kubernetes first.
+
 `kustomization.yml`
 
 ```yml
@@ -185,7 +187,6 @@ namespace: nginx
 
 # Resources to include
 resources:
-  - nginx-namespace.yml
   - nginx-configmap.yml
   - nginx-deployment.yml
   - nginx-service.yml
