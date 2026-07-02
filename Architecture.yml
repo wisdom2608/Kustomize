@@ -60,4 +60,77 @@ Update Kubernetes Manifests Repository
 +------------------------------+
 
 
+Repository
+│
+├── Environment: dev
+│      SMTP_SERVER
+│      SMTP_PORT
+│      SMTP_USERNAME
+│      SMTP_PASSWORD
+│      EMAIL_TO
+│
+├── Environment: staging
+│      SMTP_SERVER
+│      SMTP_PORT
+│      SMTP_USERNAME
+│      SMTP_PASSWORD
+│      EMAIL_TO
+│
+└── Environment: production
+       SMTP_SERVER
+       SMTP_PORT
+       SMTP_USERNAME
+       SMTP_PASSWORD
+       EMAIL_TO
 
+To set up an SMTP-based email action securely, it’s best to use GitHub Environments rather than repository secrets. This lets you keep different SMTP settings for dev, staging, and production, and even require approvals before a workflow can access production secrets.
+
+Step 1: Create a GitHub Environment
+
+1. Open your GitHub repository.
+2. Go to Settings → Environments.
+3. Click New environment.
+4. Create environments such as:
+    * dev
+    * staging
+    * production
+
+(Optional) For the production environment, you can configure:
+
+* Required reviewers
+* Deployment branches
+* Wait timers
+
+⸻
+
+Step 2: Add Environment Secrets
+
+Open each environment and add the following secrets.
+
+```bash
+# Replace "production" with "dev" or "staging" as needed
+
+gh secret set SMTP_SERVER \
+  --env production \
+  --body "smtp.gmail.com"
+
+gh secret set SMTP_PORT \
+  --env production \
+  --body "587"
+
+gh secret set SMTP_USERNAME \
+  --env production \
+  --body "your-email@gmail.com"
+
+gh secret set SMTP_PASSWORD \
+  --env production \
+  --body "your-app-password"
+
+gh secret set EMAIL_FROM \
+  --env production \
+  --body "your-email@gmail.com"
+
+gh secret set EMAIL_TO \
+  --env production \
+  --body "security@example.com"
+```
