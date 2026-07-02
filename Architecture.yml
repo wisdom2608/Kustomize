@@ -1,0 +1,63 @@
+A common GitOps approach is to separate your application source code from your Kubernetes manifests.
+                    
+                    
+                    +---------------------------+
+                    |      Developer            |
+                    +------------+--------------+
+                                 |
+                              Git Push
+                                 |
+                                 v
+                 +-------------------------------+
+                 | Application Source Repository |
+                 | (GitHub)                      |
+                 +-------------------------------+
+                                 |
+                     GitHub Actions CI Pipeline
+                                 |
+         +-----------------------+------------------------+
+         |                                                |
+         |                                                |
+         v                                                v
+  Build Docker Image                             Run Tests/Lint
+         |
+         |
+         v
+  Push Image to Docker Hub
+         |
+         |
+         v
+Update Kubernetes Manifests Repository
+(Change image tag in Kustomize Overlay)
+         |
+         |
+         v
+      Git Commit
+         |
+         |
+         v
++-------------------------------------------+
+| Kubernetes Manifests Repository           |
+|                                           |
+| base/                                     |
+| overlays/                                 |
+|   ├── dev                                 |
+|   ├── staging                             |
+|   └── prod                                |
++-------------------------------------------+
+         |
+         |
+         v
+    +------------------------+
+    | ArgoCD detects changes |
+    +------------------------+
+    
+         |
+         |
+         v
++------------------------------+
+| Deploy to Kubernetes Cluster |
++------------------------------+
+
+
+
